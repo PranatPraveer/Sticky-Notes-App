@@ -1,8 +1,10 @@
 package com.example.notesapp
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.notesapp.models.NoteRequest
+import com.example.notesapp.models.NoteResponse
 import com.example.notesapp.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,6 +15,7 @@ class NoteViewModel @Inject constructor(private val noteRepository:NoteRepositor
 
     val notesLiveData get() = noteRepository.notesLiveData
     val statusLiveData get() = noteRepository.statusLiveData
+    val dbLiveData get() = noteRepository.dbLiveData
     fun getNotes(){
         viewModelScope.launch {
             noteRepository.getNotes()
