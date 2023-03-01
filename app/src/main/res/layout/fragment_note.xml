@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#001628">
 
     <TextView
         android:id="@+id/add_edit_text"
@@ -14,7 +15,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/sf_pro_display_bold"
         android:text="Edit Note"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +27,11 @@
         android:layout_height="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="16dp"
+        android:background="#002543"
         android:src="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="@+id/add_edit_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:tint="@color/white" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -49,7 +51,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/sf_pro_display_regular"
             android:text="@string/note_title"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <EditText
@@ -57,11 +59,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:padding="20dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sf_pro_display_semibold"
             android:hint="@string/txt_title_hint"
-            android:textColor="@color/black"
+            android:padding="20dp"
+            android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:textSize="16sp" />
 
@@ -69,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="@color/light_gray" />
+            android:background="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,7 +79,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/sf_pro_display_regular"
             android:text="@string/txt_description"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <EditText
@@ -91,9 +93,9 @@
             android:hint="@string/txt_description_hint"
             android:inputType="textMultiLine"
             android:lines="10"
-            android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            android:textColor="@color/black"
+            android:scrollHorizontally="false"
+            android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:textSize="16sp" />
 
@@ -101,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="@color/light_gray" />
+            android:background="@color/white" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -109,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/teal_700"
             android:fontFamily="@font/sf_pro_display_bold"
             android:text="@string/txt_submit"
             android:textAllCaps="true"

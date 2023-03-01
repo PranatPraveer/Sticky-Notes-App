@@ -1,8 +1,13 @@
 package com.example.notesapp
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+
 
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,5 +26,6 @@ class SplashScreen : AppCompatActivity() {
                 }
             }
         } ;thread.start ()
+
     }
 }
