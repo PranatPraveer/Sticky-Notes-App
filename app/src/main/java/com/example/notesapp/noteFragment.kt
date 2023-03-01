@@ -59,18 +59,16 @@ class noteFragment : Fragment() {
                 noteViewModel.deleteNotes(it!!._id)
             }
         }
-            binding.apply {
-                btnSubmit.setOnClickListener {
-                    val title = txtTitle.text.toString()
-                    val description = txtDescription.text.toString()
-                    val noteRequest = NoteRequest(title, description)
+                binding.btnSubmit.setOnClickListener {
+                    val title = binding.txtTitle.text.toString()
+                    val description = binding.txtDescription.text.toString()
+                    val noteRequest = NoteRequest(description, title)
                     if (note == null) {
                         noteViewModel.createNotes(noteRequest)
                     } else {
                         noteViewModel.updateNotes(note!!._id, noteRequest)
                     }
                 }
-        }
     }
 
     private fun setInitialData() {

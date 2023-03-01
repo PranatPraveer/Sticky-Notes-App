@@ -85,7 +85,6 @@ class NoteRepository @Inject constructor(private val notesAPI: NotesAPI,private 
         }
         else{
             Toast.makeText(applicationContext,"Network Not Available Unable to perform Action",Toast.LENGTH_SHORT).show()
-
         }
     }
     private fun handleResponse(response: Response<NoteResponse>, message:String) {
