@@ -18,14 +18,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@HiltWorker
-class NotesWorker @AssistedInject constructor(@Assisted context: Context, @Assisted params: WorkerParameters,private val repository: NoteRepository): Worker(context, params) {
-       @Singleton
-        override fun doWork(): Result {
-            Log.d("pp","worker called")
-            CoroutineScope(Dispatchers.Main).launch {
-                repository.createNotesBackground()
-            }
-            return Result.success()
+class NotesWorker @Inject constructor(private val context: Context, params: WorkerParameters): Worker(context, params) {
+
+    override fun doWork(): Result {
+        val repository= (context as NoteApplication).repository
+        Log.d("pp","worker called")
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.createNotesBackground()
+
+        }
+        return Result.success()
     }
 }

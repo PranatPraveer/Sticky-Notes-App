@@ -6,10 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.constraintlayout.widget.ConstraintSet.Constraint
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.notesapp.repository.NoteRepository
 import com.example.notesapp.worker.NotesWorker
 import dagger.hilt.android.HiltAndroidApp
@@ -30,6 +27,7 @@ class NoteApplication :Application(){
     private fun setUpWorker() {
         val constraint= Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val workerRequest= PeriodicWorkRequest.Builder(NotesWorker::class.java,15, TimeUnit.MINUTES).setConstraints(constraint).build()
-    WorkManager.getInstance(this).enqueue(workerRequest)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("Uploading",
+            ExistingPeriodicWorkPolicy.KEEP,workerRequest)
     }
 }
