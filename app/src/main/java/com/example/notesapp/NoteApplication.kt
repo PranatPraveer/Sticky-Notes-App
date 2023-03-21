@@ -6,8 +6,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.constraintlayout.widget.ConstraintSet.Constraint
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.notesapp.repository.NoteRepository
 import com.example.notesapp.worker.NotesWorker
 import dagger.hilt.android.HiltAndroidApp
@@ -16,21 +18,18 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class NoteApplication :Application(), Configuration.Provider{
+class NoteApplication :Application(){
 
-    @Inject lateinit var workerFactory:HiltWorkerFactory
+    @Inject
+    lateinit var repository: NoteRepository
     override fun onCreate() {
         super.onCreate()
         setUpWorker()
     }
-     fun setUpWorker() {
+
+    private fun setUpWorker() {
         val constraint= Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val workerRequest= PeriodicWorkRequest.Builder(NotesWorker::class.java,15, TimeUnit.MINUTES).setConstraints(constraint).build()
-        WorkManager.getInstance(this).enqueue(workerRequest)
-    }
-
-
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder().setWorkerFactory(workerFactory).build()
+    WorkManager.getInstance(this).enqueue(workerRequest)
     }
 }
