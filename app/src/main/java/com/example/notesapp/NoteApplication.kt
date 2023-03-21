@@ -30,6 +30,6 @@ class NoteApplication :Application(){
     private fun setUpWorker() {
         val constraint= Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val workerRequest= PeriodicWorkRequest.Builder(NotesWorker::class.java,15, TimeUnit.MINUTES).setConstraints(constraint).build()
-    WorkManager.getInstance(this).enqueue(workerRequest)
+     WorkManager.getInstance(this).enqueueUniquePeriodicWork("Uploading",ExistingPeriodicWorkPolicy.KEEP,workerRequest)
     }
 }
