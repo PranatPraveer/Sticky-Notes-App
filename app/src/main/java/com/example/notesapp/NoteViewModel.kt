@@ -15,7 +15,7 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(private val noteRepository:NoteRepository):ViewModel() {
 
     val notesLiveData get() = noteRepository.notesStateFlow
-    val statusLiveData get() = noteRepository.statusStateFlow
+    val statusLiveData get() = noteRepository.statusLiveData
     val dbLiveData get() = noteRepository.dbLiveData
     fun getNotes(){
         viewModelScope.launch {

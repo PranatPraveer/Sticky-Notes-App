@@ -79,6 +79,11 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    // When using Kotlin.
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    // When using Java.
+    annotationProcessor("androidx.hilt:hilt-compiler:1.0.0")
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 }

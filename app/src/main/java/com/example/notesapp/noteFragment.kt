@@ -43,23 +43,18 @@ class noteFragment : Fragment() {
     }
 
     private fun bindObservers() {
-        viewLifecycleOwner.lifecycleScope.launch{
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                noteViewModel.statusLiveData.collect{
-                    when (it) {
-                        is NetworkResult.Success -> {
-                            findNavController().popBackStack()
-                        }
-                        is NetworkResult.Error -> {
+        noteViewModel.statusLiveData.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is NetworkResult.Success -> {
+                    findNavController().popBackStack()
+                }
+                is NetworkResult.Error -> {
+                }
+                is NetworkResult.Loading -> {
 
-                        }
-                        is NetworkResult.Loading -> {
-
-                        }
-                    }
                 }
             }
-        }
+        })
     }
 
     private fun bindHandlers() {
