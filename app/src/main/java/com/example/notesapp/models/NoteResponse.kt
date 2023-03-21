@@ -13,6 +13,4 @@ data class NoteResponse(
     val title: String,
     val updatedAt: String,
     val userId: String
-){
-
-}
+)

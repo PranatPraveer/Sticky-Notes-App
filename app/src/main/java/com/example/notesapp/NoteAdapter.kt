@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.databinding.NoteItemBinding
+import com.example.notesapp.models.NoteRequest
 import com.example.notesapp.models.NoteResponse
 
 class NoteAdapter(private val onNoteClicked: (NoteResponse) -> Unit) :
@@ -19,8 +20,8 @@ class NoteAdapter(private val onNoteClicked: (NoteResponse) -> Unit) :
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = getItem(position)
         note?.let {
-            holder.bind(it)
-        }
+                holder.bind(it)
+            }
     }
 
     inner class NoteViewHolder(private val binding: NoteItemBinding) :

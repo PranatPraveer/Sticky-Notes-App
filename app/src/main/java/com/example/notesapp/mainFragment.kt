@@ -10,7 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapp.databinding.FragmentMainBinding
@@ -20,6 +23,8 @@ import com.example.notesapp.utils.NetworkUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -53,27 +58,31 @@ class mainFragment : Fragment() {
 
     private fun bindObservers() {
         if (NetworkUtils.isNetwokAvailable(requireContext(). applicationContext)) {
-            noteViewModel.notesLiveData.observe(viewLifecycleOwner, Observer {
-                binding.progressBar.isVisible = false
-                when (it) {
-                    is NetworkResult.Success -> {
-                        mAdapter.submitList(it.data)
-                    }
-                    is NetworkResult.Error -> {
-                        mAdapter.submitList(it.data)
-                        Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-                            .show()
-                    }
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                    noteViewModel.notesLiveData.collect{
+                        binding.progressBar.isVisible = false
+                        when (it) {
+                            is NetworkResult.Success -> {
+                                mAdapter.submitList(it.data)
+                            }
+                            is NetworkResult.Error -> {
+                                mAdapter.submitList(it.data)
+                                Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                                    .show()
+                            }
 
-                    is NetworkResult.Loading -> {
-                        binding.progressBar.isVisible = true
+                            is NetworkResult.Loading -> {
+                                binding.progressBar.isVisible = true
+                            }
+                        }
                     }
                 }
-            })
+            }
         }else{
             noteViewModel.dbLiveData.observe(viewLifecycleOwner, Observer {
                 binding.progressBar.isVisible = false
-                mAdapter.submitList(it)
+                mAdapter.submitList(it as MutableList<NoteResponse>)
             })
         }
     }

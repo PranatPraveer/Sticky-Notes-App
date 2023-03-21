@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.databinding.FragmentNoteBinding
 import com.example.notesapp.models.NoteRequest
@@ -14,6 +17,8 @@ import com.example.notesapp.models.NoteResponse
 import com.example.notesapp.utils.NetworkResult
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class noteFragment : Fragment() {
@@ -38,19 +43,23 @@ class noteFragment : Fragment() {
     }
 
     private fun bindObservers() {
-        noteViewModel.statusLiveData.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is NetworkResult.Success -> {
-                    findNavController().popBackStack()
-                }
-                is NetworkResult.Error -> {
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                noteViewModel.statusLiveData.collect{
+                    when (it) {
+                        is NetworkResult.Success -> {
+                            findNavController().popBackStack()
+                        }
+                        is NetworkResult.Error -> {
 
-                }
-                is NetworkResult.Loading -> {
+                        }
+                        is NetworkResult.Loading -> {
 
+                        }
+                    }
                 }
             }
-        })
+        }
     }
 
     private fun bindHandlers() {
